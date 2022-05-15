@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
@@ -33,20 +32,11 @@ public class Search : MonoBehaviour
         var webRequest = UnityWebRequest.Get(API_URL + word);
         yield return webRequest.SendWebRequest();
 
-        // var pattern = "audio.:..[^\"]+";
-        // var rg = new Regex(pattern);
-        // var matchedAuthors = rg.Match(webRequest.downloadHandler.text);
-        //
-        // StartCoroutine(LoadMusic(matchedAuthors.Value.Split(':')[2]));
-
-
         foreach (var wordFeature in wordFeatures)
         {
-            var pattern = wordFeature.type + ".:..[^\"]+";
+            var pattern = "(?<=" + wordFeature.type + ".:.)[^\"]*";
             var rg = new Regex(pattern);
-            var matchedAuthors = rg.Match(webRequest.downloadHandler.text);
-            matchedAuthors.Value.Split(':').ToList().ForEach(x => print(x));
-            // wordFeature.data = matchedAuthors.Value.Split(':')[2];
+            wordFeature.data = rg.Match(webRequest.downloadHandler.text).Value;
         }
     }
 

@@ -267,6 +267,8 @@ MonoBehaviour:
   wordFeatures:
   - type: word
     data: 
+  - type: audio
+    data: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
