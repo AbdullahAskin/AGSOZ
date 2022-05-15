@@ -42,7 +42,7 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
-AGSOZ/Assets/Plugins/OpenCVForUnity
+AGSOZ/Assets/Plugins/OpenCVForUnity/*
 
 # Unity3D generated meta files
 *.pidb.meta
