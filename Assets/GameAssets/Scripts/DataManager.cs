@@ -2,45 +2,39 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Search : MonoBehaviour
+public class DataManager : MonoBehaviour
 {
-    // string pattern = @"\b[w]\w+";  
-    [SerializeField] private TMP_InputField inputField;
+    //Her biri icin custom limit koy
     public List<WordFeature> wordFeatures = new List<WordFeature>();
     private readonly string API_URL = "https://api.dictionaryapi.dev/api/v2/entries/en/";
-    private AudioSource audioSource;
+    private UIManager _uiManager;
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-        StartCoroutine(GetData());
+        _uiManager = FindObjectOfType<UIManager>();
     }
 
-    public void OnSearchButton()
+    public IEnumerator GetData(string word)
     {
-        StartCoroutine(GetData());
-    }
-
-    private IEnumerator GetData()
-    {
-        // var word = inputField.text;
-        var word = "hello";
         var webRequest = UnityWebRequest.Get(API_URL + word);
         yield return webRequest.SendWebRequest();
 
         foreach (var wordFeature in wordFeatures)
         {
-            var pattern = "(?<=" + wordFeature.type + ".:.)[^\"]*";
+            var pattern = "(?<=" + wordFeature.type + ".:.)[^\"]" + wordFeature.limit;
             var rg = new Regex(pattern);
-            wordFeature.data = rg.Match(webRequest.downloadHandler.text).Value;
+            var data = rg.Match(webRequest.downloadHandler.text).Value;
+            if (data.Length == 0) data = "Non found.";
+            wordFeature.data = data;
         }
+        
+        _uiManager.SyncWordFeature(wordFeatures);
     }
 
-    private IEnumerator LoadMusic(string url)
+    public IEnumerator PlayClip(AudioSource audioSource, string url)
     {
         var music = new WWW(url);
         yield return music;
@@ -53,6 +47,15 @@ public class Search : MonoBehaviour
 [Serializable]
 public class WordFeature
 {
-    public string type;
+    public WordFeatureType type;
     public string data;
+    public string limit;
+}
+
+public enum WordFeatureType
+{
+    word,
+    audio,
+    definition,
+    example
 }
