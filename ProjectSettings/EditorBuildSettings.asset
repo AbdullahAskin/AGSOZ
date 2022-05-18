@@ -178,7 +178,7 @@ EditorBuildSettings:
     path: Assets/Plugins/OpenCVForUnity/Examples/MainModules/dnn/ResnetSSDFaceDetectionExample/ResnetSSDFaceDetectionExample.unity
     guid: f3c7df9da45c1e645b273e39e98ed8de
   - enabled: 1
-    path: Assets/GameAssets/Scenes/SampleScene.unity
+    path: Assets/GameAssets/Scenes/TranslateScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Plugins/OpenCVForUnity/Examples/MainModules/photo/SeamlessCloneExample/SeamlessCloneExample.unity
