@@ -11,24 +11,24 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_InputField inputField;
     private AudioSource _audioSource;
     private List<WordFeature> _currentWordFeature;
-    private DataManager _dataManager;
+    private DictionaryDataManager _dictionaryDataManager;
 
     private void Awake()
     {
         _audioSource = FindObjectOfType<AudioSource>();
-        _dataManager = FindObjectOfType<DataManager>();
+        _dictionaryDataManager = FindObjectOfType<DictionaryDataManager>();
     }
 
     public void OnSearchButton()
     {
         var word = inputField.text;
-        StartCoroutine(_dataManager.GetData(word));
+        StartCoroutine(_dictionaryDataManager.GetDictionaryData(word));
     }
 
     public void OnPlayClipButton()
     {
         var audioFeature = _currentWordFeature.Find(x => x.type == WordFeatureType.audio);
-        StartCoroutine(_dataManager.PlayClip(_audioSource, audioFeature.data));
+        StartCoroutine(_dictionaryDataManager.PlayClip(_audioSource, audioFeature.data));
     }
 
     public void SyncWordFeature(IEnumerable<WordFeature> wordFeatures)
