@@ -5,9 +5,8 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class DataManager : MonoBehaviour
+public class DictionaryDataManager : MonoBehaviour
 {
-    //Her biri icin custom limit koy
     public List<WordFeature> wordFeatures = new List<WordFeature>();
     private readonly string API_URL = "https://api.dictionaryapi.dev/api/v2/entries/en/";
     private UIManager _uiManager;
@@ -17,7 +16,7 @@ public class DataManager : MonoBehaviour
         _uiManager = FindObjectOfType<UIManager>();
     }
 
-    public IEnumerator GetData(string word)
+    public IEnumerator GetDictionaryData(string word)
     {
         var webRequest = UnityWebRequest.Get(API_URL + word);
         yield return webRequest.SendWebRequest();
@@ -25,12 +24,11 @@ public class DataManager : MonoBehaviour
         foreach (var wordFeature in wordFeatures)
         {
             var pattern = "(?<=" + wordFeature.type + ".:.)[^\"]" + wordFeature.limit;
-            var rg = new Regex(pattern);
+            var rg = new Regex(pattern);    
             var data = rg.Match(webRequest.downloadHandler.text).Value;
             if (data.Length == 0) data = "Non found.";
             wordFeature.data = data;
         }
-        
         _uiManager.SyncWordFeature(wordFeatures);
     }
 
