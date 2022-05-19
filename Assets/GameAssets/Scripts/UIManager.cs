@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,17 +11,20 @@ public class UIManager : MonoBehaviour
     private AudioSource _audioSource;
     private List<WordFeature> _currentWordFeature;
     private DictionaryDataManager _dictionaryDataManager;
+    private PhotoDataManager _photoDataManager;
 
     private void Awake()
     {
         _audioSource = FindObjectOfType<AudioSource>();
         _dictionaryDataManager = FindObjectOfType<DictionaryDataManager>();
+        _photoDataManager = FindObjectOfType<PhotoDataManager>();
     }
 
     public void OnSearchButton()
     {
         var word = inputField.text;
-        StartCoroutine(_dictionaryDataManager.GetDictionaryData(word));
+        StartCoroutine(_dictionaryDataManager.GetDictionaryDatas(word));
+        StartCoroutine(_photoDataManager.GetPhotoDatas(word));
     }
 
     public void OnPlayClipButton()
