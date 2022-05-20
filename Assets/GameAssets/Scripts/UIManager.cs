@@ -12,12 +12,14 @@ public class UIManager : MonoBehaviour
     private List<WordFeature> _currentWordFeature;
     private DictionaryDataManager _dictionaryDataManager;
     private PhotoDataManager _photoDataManager;
+    private VideoDataManager _videoDataManager;
 
     private void Awake()
     {
         _audioSource = FindObjectOfType<AudioSource>();
         _dictionaryDataManager = FindObjectOfType<DictionaryDataManager>();
         _photoDataManager = FindObjectOfType<PhotoDataManager>();
+        _videoDataManager = FindObjectOfType<VideoDataManager>();
     }
 
     public void OnSearchButton()
@@ -25,6 +27,7 @@ public class UIManager : MonoBehaviour
         var word = inputField.text;
         StartCoroutine(_dictionaryDataManager.GetDictionaryDatas(word));
         StartCoroutine(_photoDataManager.GetPhotoDatas(word));
+        StartCoroutine(_videoDataManager.GetVideoDatas(word));
     }
 
     public void OnPlayClipButton()
