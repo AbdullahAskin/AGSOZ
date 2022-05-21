@@ -11,25 +11,19 @@ public class PhotoDataManager : MonoBehaviour
     [SerializeField] private int perPage;
     [SerializeField] private List<RawImage> rawImages;
 
-    private void Start()
-    {
-        StartCoroutine(GetDictionaryData("car"));
-    }
-
-    public IEnumerator GetDictionaryData(string word)
+    public IEnumerator GetPhotoDatas(string word)
     {
         var currentApiUrl = "https://api.unsplash.com/search/photos?query=" + word + "&client_id=" + clientId + "&per_page="+perPage;
         var webRequest = UnityWebRequest.Get(currentApiUrl);
         yield return webRequest.SendWebRequest();
 
         var pattern = "(?<=thumb.:.)[^\"]*(fit=max)[^\"]+";
-        
         var rg = new Regex(pattern);
         var matchedAuthors = rg.Matches(webRequest.downloadHandler.text);
 
         for (var index = 0; index < matchedAuthors.Count; index++)
         {
-            if (index + 1 >= rawImages.Count) break;
+            if (index == rawImages.Count) break;
             var rawUrl = matchedAuthors[index].Value;
             var url = rawUrl.Insert(rawUrl.Length - 5, "&");
             var www = UnityWebRequestTexture.GetTexture(url);

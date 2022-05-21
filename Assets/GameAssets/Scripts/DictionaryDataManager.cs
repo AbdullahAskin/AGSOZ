@@ -16,7 +16,7 @@ public class DictionaryDataManager : MonoBehaviour
         _uiManager = FindObjectOfType<UIManager>();
     }
 
-    public IEnumerator GetDictionaryData(string word)
+    public IEnumerator GetDictionaryDatas(string word)
     {
         var webRequest = UnityWebRequest.Get(API_URL + word);
         yield return webRequest.SendWebRequest();
