@@ -7,7 +7,9 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private List<WordUIElement> wordUIElements;
     [SerializeField] private TextMeshProUGUI titleText;
-    [SerializeField] private TMP_InputField inputField;
+    public TMP_InputField inputField;
+    public float recordDuration;
+    private AudioRecorder _audioRecorder;
     private AudioSource _audioSource;
     private List<WordFeature> _currentWordFeature;
     private DictionaryDataManager _dictionaryDataManager;
@@ -20,6 +22,12 @@ public class UIManager : MonoBehaviour
         _dictionaryDataManager = FindObjectOfType<DictionaryDataManager>();
         _photoDataManager = FindObjectOfType<PhotoDataManager>();
         _videoDataManager = FindObjectOfType<VideoDataManager>();
+        _audioRecorder = FindObjectOfType<AudioRecorder>();
+    }
+
+    public void OnRecordButton()
+    {
+        StartCoroutine(_audioRecorder.Record(recordDuration));
     }
 
     public void OnSearchButton()
@@ -46,6 +54,11 @@ public class UIManager : MonoBehaviour
             var wordFeature = _currentWordFeature.Find(x => x.type == wordUIElement.type);
             wordUIElement.textElement.text = wordUIElement.textStart + wordFeature.data;
         }
+    }
+
+    public void SetInputField(string input)
+    {
+        inputField.text = input;
     }
 }
 

@@ -26,7 +26,6 @@ public class VideoDataManager : MonoBehaviour
 
         for (var index = 0; index < matchedAuthors.Count; index++)
         {
-            print(index);
             if (index == videoPlayers.Count) break;
             var videoPattern = "(?<=mp4.:.)[^\"]*";
             var videoRg = new Regex(videoPattern);
