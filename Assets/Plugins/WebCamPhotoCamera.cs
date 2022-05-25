@@ -1,24 +1,27 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
-using UnityEngine.UI;
+using DG.Tweening;
 using OpenCVForUnityExample;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class WebCamPhotoCamera : MonoBehaviour
 {
-    public RawImage rawImage;
-
-    static WebCamTexture backCam;
+    private static WebCamTexture backCam;
+    public RawImage cameraImage;
+    [SerializeField] private float cameraFrozeTime;
+    [SerializeField] private float photoOffset;
+    [SerializeField] private Button shootPhotoButton;
+    private Coroutine _currentCoroutine;
 
     private MaskRCNNExample _maskRcnnExample;
 
-    void Start()
+    private void Start()
     {
         if (backCam == null)
             backCam = new WebCamTexture();
 
-        GetComponent<Renderer>().material.mainTexture = backCam;
+        cameraImage.texture = backCam;
 
         _maskRcnnExample = FindObjectOfType<MaskRCNNExample>();
 
@@ -28,19 +31,26 @@ public class WebCamPhotoCamera : MonoBehaviour
 
     public void RecordPhoto()
     {
-        StartCoroutine(TakePhoto());
+        if (_currentCoroutine != null) StopCoroutine(_currentCoroutine);
+        _currentCoroutine = StartCoroutine(TakePhoto());
+
+        shootPhotoButton.interactable = false;
+        DOVirtual.DelayedCall(photoOffset, () => shootPhotoButton.interactable = true);
     }
 
-    IEnumerator TakePhoto()  
+    private IEnumerator TakePhoto()
     {
         yield return new WaitForEndOfFrame();
 
-        Texture2D photo = new Texture2D(backCam.width, backCam.height);
+        var photo = new Texture2D(backCam.width, backCam.height);
         photo.SetPixels(backCam.GetPixels());
         photo.Apply();
 
-        byte[] bytes = photo.EncodeToJPG();
-        File.WriteAllBytes(Application.dataPath+@"/StreamingAssets/dnn/004545.jpg", bytes);
-        rawImage.texture = photo;
+        var bytes = photo.EncodeToJPG();
+        File.WriteAllBytes(Application.dataPath + @"/StreamingAssets/dnn/004545.jpg", bytes);
+        cameraImage.texture = photo;
+
+        yield return new WaitForSeconds(cameraFrozeTime);
+        cameraImage.texture = backCam;
     }
 }
