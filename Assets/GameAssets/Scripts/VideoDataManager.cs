@@ -18,7 +18,6 @@ public class VideoDataManager : MonoBehaviour
                             word;
         var webRequest = UnityWebRequest.Get(currentApiUrl);
         yield return webRequest.SendWebRequest();
-        print(currentApiUrl);
 
         var originalPattern = "\"original\"[^}]*";
         var originalRg = new Regex(originalPattern);
