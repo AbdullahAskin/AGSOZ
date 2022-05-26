@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.Events;
 
-public class AudioRecorder : MonoBehaviour, IMicrophone
+public class VoiceRecorder : MonoBehaviour, IMicrophone
 {
     private const int LENGTH_SEC = 2;
     private const int FREQ = 16000;
