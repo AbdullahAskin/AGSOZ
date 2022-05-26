@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -11,6 +12,12 @@ public class VideoDataManager : MonoBehaviour
     [SerializeField] private string clientId;
     [SerializeField] private int perPage;
     [SerializeField] private List<VideoPlayer> videoPlayers;
+    
+    private void Start()
+    {
+        foreach (var renderTexture in videoPlayers.Select(x => x.targetTexture))
+            renderTexture.Release();
+    }
 
     public IEnumerator GetVideoDatas(string word)
     {

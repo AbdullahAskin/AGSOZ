@@ -26,9 +26,9 @@ public class PhotoDataManager : MonoBehaviour
             if (index == rawImages.Count) break;
             var rawUrl = matchedAuthors[index].Value;
             var url = rawUrl.Insert(rawUrl.Length - 5, "&");
-            var www = UnityWebRequestTexture.GetTexture(url);
-            yield return www.SendWebRequest();
-            Texture myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+            var unityWebRequest = UnityWebRequestTexture.GetTexture(url);
+            yield return unityWebRequest.SendWebRequest();
+            Texture myTexture = ((DownloadHandlerTexture)unityWebRequest.downloadHandler).texture;
             rawImages[index].texture = myTexture;
             rawImages[index].SetNativeSize();
         }

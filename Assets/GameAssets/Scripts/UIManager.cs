@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI titleText;
     public TMP_InputField inputField;
     public float recordDuration;
-    private AudioRecorder _audioRecorder;
+    private VoiceRecorder _voiceRecorder;
     private AudioSource _audioSource;
     private List<WordFeature> _currentWordFeature;
     private DictionaryDataManager _dictionaryDataManager;
@@ -22,12 +22,12 @@ public class UIManager : MonoBehaviour
         _dictionaryDataManager = FindObjectOfType<DictionaryDataManager>();
         _photoDataManager = FindObjectOfType<PhotoDataManager>();
         _videoDataManager = FindObjectOfType<VideoDataManager>();
-        _audioRecorder = FindObjectOfType<AudioRecorder>();
+        _voiceRecorder = FindObjectOfType<VoiceRecorder>();
     }
 
     public void OnRecordButton()
     {
-        StartCoroutine(_audioRecorder.Record(recordDuration));
+        StartCoroutine(_voiceRecorder.Record(recordDuration));
     }
 
     public void OnSearchButton()
