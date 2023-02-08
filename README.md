@@ -4,9 +4,7 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-<head>
-  <title>English Learner Assistant Dictionary Demo</title>
-</head>
+
 <body>
   <h1>English Learner Assistant Dictionary Demo</h1>
   <p>This app is a demo of an English Learner Assistant Dictionary, which is supported by Tubitak.</p>
