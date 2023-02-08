@@ -26,7 +26,8 @@ The use of smart devices is increasing day by day. These devices make our daily 
 <!-- SETUP AND USAGE -->
 ## Setup and Usage
 
-To run Zombie Runner, follow these steps:
+To run 
+Runner, follow these steps:
 
 1. Clone or download the repository to your local machine
 2. Open the project in your preferred game engine
@@ -35,7 +36,7 @@ To run Zombie Runner, follow these steps:
 <!-- BUILT WITH -->
 ## Built With
 
-Zombie Runner was built using the following technologies and tools:
+AGSOZ was built using the following technologies and tools:
 
 - Unity3d
 - C# for logic and mechanics
